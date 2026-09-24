@@ -46,3 +46,5 @@
 | Refactoring                        | Verbesserung der internen Struktur von bestehendem Code,<br> ohne dessen Funktion oder Verhalten zu ändern.                                                              |
 | Serialisierung                     | Umwandlung eines Objekts in ein speicher- oder<br> übertragbares Format.                                                                                                 |
 | Deserialisierung                   | Umwandlung von gespeicherten Daten zurück in ein Objekt.                                                                                                                 |
+| Java Pfad anzeigen                 | Zeigt das aktuelle Arbeitsverzeichnis an:<br> `System.getProperty("user.dir")`                                                                                           |
+| Java Pfad anzeigen (alternativ)    | Zeigt das aktuelle Arbeitsverzeichnis mit `Path` an:<br> `Path.of("").toAbsolutePath()`                                                                                  |
