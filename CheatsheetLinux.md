@@ -530,6 +530,8 @@ nmap 0.0.0.0                # Scan for the 1000 most common open ports on localh
 nmap 0.0.0.0 -p1-65535      # Scan for open ports on localhost between 1 and 65535
 nmap 192.168.4.3            # Scan for the 1000 most common open ports on a remote IP address
 nmap -sP 192.168.1.1/24     # Discover all machines on the network by ping'ing them
+
+nmtui                       # NetworkManager Text User Interface
 ```
 
 ## DNS
