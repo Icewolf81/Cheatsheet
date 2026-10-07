@@ -56,6 +56,7 @@ Warning: Some Windows `cd` habits do not work the same way in Bash.
 
 - `cd/` is not the usual Bash syntax.
   Use `cd /`.
+  
 `dir` also exists on many Linux systems, but `ls` is the commonly used command.
 
 ## Creating Directories
