@@ -4,7 +4,7 @@ Bash Cheat Sheet
 
 A cheat sheet for bash commands.
 
-> **Note:** A comma between command options indicates alternative forms.  
+> **Note:** A comma indicates alternative commands or option forms.  
 > Example: `ls -a, --all` means `ls -a` or `ls --all`.
 
 ## Command History
@@ -15,6 +15,7 @@ A cheat sheet for bash commands.
 !!            # Run the last command
 
 CTRL+r        # Search bash history (hit CTRL+r multiple times to find multiple occurrences)
+history -c      # Clear the current shell history
 
 touch foo.sh              # Create foo.sh
 chmod +x !$                # !$ is the last argument of the last command, i.e. foo.sh
@@ -26,6 +27,7 @@ chmod +x !$                # !$ is the last argument of the last command, i.e. f
 
 ```shell
 pwd                       # Print current directory path
+clear, CTRL+L             # Clear the terminal screen
 ls                        # List files and directories
 ls -a, --all             # List files and directories including hidden
 ls -l                     # List files and directories in long form
