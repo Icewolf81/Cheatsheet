@@ -30,9 +30,9 @@ ls                        # List files and directories
 ls -a, --all             # List files and directories including hidden
 ls -l                     # List files and directories in long form
 ls -l -h, --human-readable # Long format with human-readable sizes
-ls -t                     # List directories by modification time, newest first
-stat foo.txt              # List size, created and modified timestamps for a file
-stat foo                  # List size, created and modified timestamps for a directory
+ls -t                     # List files and directories by modification time, newest first
+stat foo.txt              # Show file metadata such as size and timestamps
+stat foo                  # Show directory metadata such as size and timestamps
 tree                      # List directory and file tree
 tree -a                   # List directory and file tree including hidden
 tree -d                   # List directory tree
@@ -357,10 +357,10 @@ tar -xf foo.tar            # Extract an uncompressed tar archive
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#disk-usage)
 
 ```shell
-df                     # List disks, size, used and available space
+df                     # List filesystems, used and available space
 df -h, --human-readable # List disks, size, used and available space in a human readable format
 
-du                     # List current directory, subdirectories and file sizes
+du                     # Show disk usage of the current directory and subdirectories
 du /foo/bar            # List specified directory, subdirectories and file sizes
 du -h, --human-readable # List current directory, subdirectories and file sizes in a human readable format
 du -d 1, --max-depth=1  # List sizes down to a maximum depth of 1
@@ -375,7 +375,7 @@ du -d 0, --max-depth=0  # List only the current directory size
 free                   # Show memory usage
 free -h, --human        # Show human readable memory usage
 free -h, --human --si   # Show human readable memory usage in power of 1000 instead of 1024
-free -s, --seconds 5    # Show memory usage and update continuously every five seconds
+free -s 5, --seconds 5  # Show memory usage and update continuously every five seconds
 ```
 
 ## Logs & System Debugging
@@ -460,7 +460,7 @@ Process priorities go from -20 (highest) to 19 (lowest).
 nice -n 10 foo         # Start foo with nice value 10
 sudo nice -n -20 foo   # Start foo with highest priority (requires privileges)
 renice -n 19 -p PID    # Set the nice value of PID to 19
-ps -o ni PID           # Show the nice value of PID
+ps -o ni -p PID        # Show the nice value of PID
 ```
 
 ## Killing Processes
@@ -555,7 +555,7 @@ ss -tuln                    # List listening TCP and UDP sockets (modern alterna
 traceroute example.com      # Show the network hops to a destination
 
 mtr -w, --report-wide example.com                                    # Continually list all servers the network traffic goes through
-mtr -r, --report -w, --report-wide -c, --report-cycles 100 example.com # Output a report that lists network traffic 100 times
+mtr -r, --report -w, --report-wide -c 100, --report-cycles 100 example.com # Output a report that lists network traffic 100 times
 
 nmap localhost              # Scan the 1000 most common ports on localhost
 nmap localhost -p 1-65535   # Scan ports 1 through 65535 on localhost
@@ -584,7 +584,7 @@ cat /etc/resolv.conf        # Show resolver configuration; often managed automat
 ```shell
 lsusb                  # List USB devices
 lspci                  # List PCI hardware
-lshw                   # List all hardware
+sudo lshw             # List detailed hardware information
 ```
 
 ## Terminal Multiplexers
@@ -677,10 +677,10 @@ declare -i foo=123     # Initialize an integer foo with 123
 declare -r foo=123     # Initialize readonly variable foo with 123
 echo $foo              # Print variable foo
 echo ${foo}_'bar'      # Print variable foo followed by _bar
-echo ${foo:-'default'} # Print variable foo if it exists otherwise print default
+echo ${foo:-'default'} # Print foo if set and non-empty, otherwise print default
 
 export foo             # Make foo available to child processes
-unset foo              # Make foo unavailable to child processes
+unset foo              # Remove variable foo
 ```
 
 ### Environment Variables
@@ -759,8 +759,8 @@ echo $?  # Print the last exit code
 - `==` - Equals
 - `-z` - Is null
 - `-n` - Is not null
-- `<` - Is less than in ASCII alphabetical order
-- `>` - Is greater than in ASCII alphabetical order
+- `<` - Lexicographically less than
+- `>` - Lexicographically greater than
 
 #### If Statements
 
