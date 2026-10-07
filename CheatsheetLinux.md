@@ -38,12 +38,14 @@ tree -a                   # List directory and file tree including hidden
 tree -d                   # List directory tree
 cd foo                    # Go to foo sub-directory
 cd /                      # Go to root directory
+cd                        # Go to home directory
 cd ~                      # Go to home directory
 cd ..                     # Go to parent directory
 cd -                      # Go to previous directory
 pushd foo                 # Go to foo sub-directory and add previous directory to stack
 popd                      # Go back to directory in stack saved by `pushd`
 
+```
 Warning: Some Windows `cd` habits do not work the same way in Bash.
 
 - `cd \` is not the Linux equivalent of Windows `cd \`.
@@ -55,7 +57,6 @@ Warning: Some Windows `cd` habits do not work the same way in Bash.
 - `cd/` is not the usual Bash syntax.
   Use `cd /`.
 `dir` also exists on many Linux systems, but `ls` is the commonly used command.
-```
 
 ## Creating Directories
 
