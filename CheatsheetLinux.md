@@ -4,8 +4,8 @@ Bash Cheat Sheet
 
 A cheat sheet for bash commands.
 
-> **Hinweis:** Bei Befehlsoptionen kennzeichnet ein Komma alternative Schreibweisen.  
-> Beispiel: `ls -a, --all` bedeutet `ls -a` oder `ls --all`.
+> **Note:** A comma between command options indicates alternative forms.  
+> Example: `ls -a, --all` means `ls -a` or `ls --all`.
 
 ## Command History
 
@@ -16,7 +16,8 @@ A cheat sheet for bash commands.
 
 CTRL+r        # Search bash history (hit CTRL+r multiple times to find multiple occurrences)
 
-touch foo.shchmod +x !$   # !$ is the last argument of the last command i.e. foo.sh
+touch foo.sh              # Create foo.sh
+chmod +x !$                # !$ is the last argument of the last command, i.e. foo.sh
 ```
 
 ## Navigating Directories
@@ -25,10 +26,10 @@ touch foo.shchmod +x !$   # !$ is the last argument of the last command i.e. foo
 
 ```shell
 pwd                       # Print current directory path
-ls                        # List directories
-ls -a, --all               # List directories including hidden
-ls -l                     # List directories in long form
-ls -l -h, --human-readable # List directories in long form with human readable sizes
+ls                        # List files and directories
+ls -a, --all             # List files and directories including hidden
+ls -l                     # List files and directories in long form
+ls -l -h, --human-readable # Long format with human-readable sizes
 ls -t                     # List directories by modification time, newest first
 stat foo.txt              # List size, created and modified timestamps for a file
 stat foo                  # List size, created and modified timestamps for a directory
@@ -64,8 +65,8 @@ mktemp -d, --directory            # Create a temporary directory
 cp -R, --recursive foo bar                               # Copy directory
 mv foo bar                                              # Move directory
 
-rsync -z, --compress -v, --verbose /foo /bar              # Copy directory, overwrites destination
-rsync -a, --archive -z, --compress -v, --verbose /foo /bar # Copy directory, without overwriting destination
+rsync -r, --recursive -z, --compress -v, --verbose /foo/ /bar/ # Copy directory recursively
+rsync -a, --archive -z, --compress -v, --verbose /foo/ /bar/   # Copy directory in archive mode and preserve attributes
 rsync -avz /foo username@hostname:/bar                  # Copy local directory to remote directory
 rsync -avz username@hostname:/foo /bar                  # Copy remote directory to local directory
 ```
@@ -104,8 +105,8 @@ echo "foo" >> bar.txt      # Append to file with content
 
 ls exists 1> stdout.txt    # Redirect the standard output to a file
 ls noexist 2> stderror.txt # Redirect the standard error output to a file
-ls 2>&1 > out.txt          # Redirect standard output and error to a file
-ls > /dev/null             # Discard standard output and error
+ls > out.txt 2>&1          # Redirect standard output and standard error to a file
+ls > /dev/null 2>&1         # Discard standard output and standard error
 
 read foo                   # Read from standard input and write to the variable foo
 ```
@@ -119,7 +120,7 @@ cp foo.txt bar.txt                                # Copy file
 mv foo.txt bar.txt                                # Move file
 
 rsync -z, --compress -v, --verbose /foo.txt /bar    # Copy file quickly if not changed
-rsync z|--compress -v, --verbose /foo.txt /bar.txt # Copy and rename file quickly if not changed
+rsync -z, --compress -v, --verbose /foo.txt /bar.txt # Copy and rename file quickly if not changed
 ```
 
 ## Deleting Files
@@ -140,8 +141,8 @@ cat foo.txt            # Print all contents
 less foo.txt           # Print some contents at a time (g - go to top of file, SHIFT+g, go to bottom of file, /foo to search for 'foo')
 head foo.txt           # Print top 10 lines of file
 tail foo.txt           # Print bottom 10 lines of file
-open foo.txt           # Open file in the default editor
-wc foo.txt             # List number of lines words and characters in the file
+xdg-open foo.txt       # Open file with the default desktop application
+wc foo.txt             # List number of lines, words and bytes in the file
 ```
 
 ## File Permissions
@@ -163,8 +164,8 @@ For a directory, execute means you can enter a directory.
 
 | User | Group | Others | Description |
 | --- | --- | --- | --- |
-| 6   | 4   | 4   | User can read and write, everyone else can read (Default file permissions) |
-| 7   | 5   | 5   | User can read, write and execute, everyone else can read and execute (Default directory permissions) |
+| 6   | 4   | 4   | User can read and write, everyone else can read (typical file permissions with umask 022) |
+| 7   | 5   | 5   | User can read, write and execute, everyone else can read and execute (typical directory permissions with umask 022) |
 
 - u - User
 - g - Group
@@ -173,14 +174,14 @@ For a directory, execute means you can enter a directory.
 
 ```shell
 ls -l /foo.sh            # List file permissions
-chmod +100 foo.sh        # Add 1 to the user permission
-chmod -100 foo.sh        # Subtract 1 from the user permission
+chmod 744 foo.sh         # Set permissions to rwxr--r--
+chmod 644 foo.sh         # Set permissions to rw-r--r--
 chmod u+x foo.sh         # Give the user execute permission
 chmod g+x foo.sh         # Give the group execute permission
 chmod u-x,g-x foo.sh     # Take away the user and group execute permission
 chmod u+x,g+x,o+x foo.sh # Give everybody execute permission
 chmod a+x foo.sh         # Give everybody execute permission
-chmod +x foo.sh          # Give everybody execute permission
+chmod +x foo.sh          # Add execute permission, affected by the current umask
 ```
 
 ## Finding Files
@@ -198,11 +199,11 @@ whereis wget                               # Find the binary, source, and manual
 `locate` uses an index and is fast.
 
 ```shell
-updatedb                                   # Update the index
+sudo updatedb                              # Update the locate index
 
 locate foo.txt                             # Find a file
-locate --ignore-case                       # Find a file and ignore case
-locate f*.txt                              # Find a text file starting with 'f'
+locate -i, --ignore-case foo.txt           # Find a file and ignore case
+locate 'f*.txt'                            # Find a text file starting with 'f'
 ```
 
 `find` doesn't use an index and is slow.
@@ -212,7 +213,7 @@ find /path -name foo.txt                   # Find a file
 find /path -iname foo.txt                  # Find a file with case insensitive search
 find /path -name "*.txt"                   # Find all text files
 find /path -name foo.txt -delete           # Find a file and delete it
-find /path -name "*.png" -exec pngquant {} # Find all .png files and execute pngquant on it
+find /path -name "*.png" -exec pngquant {} \; # Find all .png files and execute pngquant on each one
 find /path -type f -name foo.txt           # Find a file
 find /path -type d -name foo               # Find a directory
 find /path -type l -name foo.txt           # Find a symbolic link
@@ -226,20 +227,20 @@ find /path -type f -mtime +30 -delete      # Delete files that haven't been modi
 
 ```shell
 grep 'foo' /bar.txt                         # Search for 'foo' in file 'bar.txt'
-grep 'foo' /bar -r, --recursive              # Search for 'foo' in directory 'bar'
-grep 'foo' /bar -R, --dereference-recursive  # Search for 'foo' in directory 'bar' and follow symbolic links
-grep 'foo' /bar -l, --files-with-matches     # Show only files that match
-grep 'foo' /bar -L, --files-without-match    # Show only files that don't match
-grep 'Foo' /bar -i, --ignore-case            # Case insensitive search
-grep 'foo' /bar -x, --line-regexp            # Match the entire line
-grep 'foo' /bar -C, --context 1              # Add N line of context above and below each search result
-grep 'foo' /bar -v, --invert-match           # Show only lines that don't match
-grep 'foo' /bar -c, --count                  # Count the number lines that match
-grep 'foo' /bar -n, --line-number            # Add line numbers
-grep 'foo' /bar --colour                    # Add colour to output
-grep 'foo\|bar' /baz -R                     # Search for 'foo' or 'bar' in directory 'baz'
-grep --extended-regexp|-E 'foo|bar' /baz -R # Use regular expressions
-egrep 'foo|bar' /baz -R                     # Use regular expressions
+grep -r, --recursive 'foo' /bar              # Search for 'foo' in directory 'bar'
+grep -R, --dereference-recursive 'foo' /bar  # Search for 'foo' in directory 'bar' and follow symbolic links
+grep -l, --files-with-matches 'foo' /bar     # Show only files that match
+grep -L, --files-without-match 'foo' /bar    # Show only files that don't match
+grep -i, --ignore-case 'Foo' /bar            # Case-insensitive search
+grep -x, --line-regexp 'foo' /bar            # Match the entire line
+grep -C 1, --context=1 'foo' /bar            # Add one line of context above and below each result
+grep -v, --invert-match 'foo' /bar           # Show only lines that don't match
+grep -c, --count 'foo' /bar                  # Count matching lines
+grep -n, --line-number 'foo' /bar            # Add line numbers
+grep --color=auto 'foo' /bar                 # Add colour to output
+grep -R 'foo\|bar' /baz                     # Search for 'foo' or 'bar' using a basic regular expression
+grep -R -E, --extended-regexp 'foo|bar' /baz # Use extended regular expressions
+egrep -R 'foo|bar' /baz                     # Legacy alias; prefer grep -E
 ```
 
 ### Replace in Files
@@ -249,9 +250,9 @@ egrep 'foo|bar' /baz -R                     # Use regular expressions
 ```shell
 sed 's/fox/bear/g' foo.txt               # Replace fox with bear in foo.txt and output to console
 sed 's/fox/bear/gi' foo.txt              # Replace fox (case insensitive) with bear in foo.txt and output to console
-sed 's/red fox/blue bear/g' foo.txt      # Replace red with blue and fox with bear in foo.txt and output to console
+sed 's/red fox/blue bear/g' foo.txt      # Replace the exact text 'red fox' with 'blue bear'
 sed 's/fox/bear/g' foo.txt > bar.txt     # Replace fox with bear in foo.txt and save in bar.txt
-sed 's/fox/bear/g' foo.txt -i, --in-place # Replace fox with bear and overwrite foo.txt
+sed -i, --in-place 's/fox/bear/g' foo.txt # Replace fox with bear and overwrite foo.txt
 ```
 
 ## Symbolic Links
@@ -288,8 +289,9 @@ zip -r, --recurse-paths foo.zip /bar # Compress directory bar into foo.zip
 Compresses a single file into *.gz files.
 
 ```shell
-gzip /bar.txt foo.gz           # Compress bar.txt into foo.gz and then delete bar.txt
-gzip -k, --keep /bar.txt foo.gz # Compress bar.txt into foo.gz
+gzip /bar.txt                  # Compress bar.txt into bar.txt.gz and delete the original
+gzip -k, --keep /bar.txt       # Compress bar.txt into bar.txt.gz and keep the original
+gzip -c /bar.txt > foo.gz      # Compress bar.txt and write the result to foo.gz
 ```
 
 ### tar -c
@@ -299,9 +301,10 @@ gzip -k, --keep /bar.txt foo.gz # Compress bar.txt into foo.gz
 Compresses (optionally) and combines one or more files into a single *.tar, *.tar.gz, *.tpz or *.tgz file.
 
 ```shell
-tar -c, --create -z, --gzip -f, --file=foo.tgz /bar.txt /baz.txt # Compress bar.txt and baz.txt into foo.tgz
-tar -c, --create -z, --gzip -f, --file=foo.tgz /{bar,baz}.txt    # Compress bar.txt and baz.txt into foo.tgz
-tar -c, --create -z, --gzip -f, --file=foo.tgz /bar              # Compress directory bar into foo.tgz
+tar -czf foo.tgz /bar.txt /baz.txt              # Create a gzip-compressed archive from two files
+tar -czf foo.tgz /{bar,baz}.txt                  # Create a gzip-compressed archive using brace expansion
+tar -czf foo.tgz /bar                            # Create a gzip-compressed archive from a directory
+tar --create --gzip --file=foo.tgz /bar          # Same using long options
 ```
 
 ## Decompressing Files
@@ -330,8 +333,8 @@ gunzip -k, --keep foo.gz # Unzip foo.gz into current directory
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#tar--x)
 
 ```shell
-tar -x, --extract -z, --gzip -f, --file=foo.tar.gz # Un-compress foo.tar.gz into current directory
-tar -x, --extract -f, --file=foo.tar              # Un-combine foo.tar into current directory
+tar -xzf foo.tar.gz       # Extract a gzip-compressed tar archive
+tar -xf foo.tar            # Extract an uncompressed tar archive
 ```
 
 ## Disk Usage
@@ -345,8 +348,8 @@ df -h, --human-readable # List disks, size, used and available space in a human 
 du                     # List current directory, subdirectories and file sizes
 du /foo/bar            # List specified directory, subdirectories and file sizes
 du -h, --human-readable # List current directory, subdirectories and file sizes in a human readable format
-du -d, --max-depth      # List current directory, subdirectories and file sizes within the max depth
-du -d 0                # List current directory size
+du -d 1, --max-depth=1  # List sizes down to a maximum depth of 1
+du -d 0, --max-depth=0  # List only the current directory size
 ```
 
 ## Memory Usage
@@ -364,23 +367,30 @@ free -s, --seconds 5    # Show memory usage and update continuously every five s
 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#logs--system-debugging)
 
-journalctl -u nginx # Logs for a specific service journalctl -xe # Recent errors with explanations journalctl -f # Follow logs in real time journalctl -k # Kernel logs (systemd)
+```shell
+journalctl -u nginx          # Logs for a specific service
+journalctl -xe               # Recent log entries with additional context
+journalctl -f                # Follow logs in real time
+journalctl -k                # Kernel logs from the systemd journal
 
-dmesg | tail # Recent kernel messages (early boot / non-systemd) tail -f /var/log/syslog # Live system logs (Debian/Ubuntu) tail -f /var/log/messages # Live system logs (RHEL/CentOS)
+dmesg | tail                 # Recent kernel messages
+tail -f /var/log/syslog     # Live system logs on many Debian/Ubuntu systems
+tail -f /var/log/messages   # Live system logs on many RHEL/Fedora/CentOS Stream systems
+```
 
 ## Packages
 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#packages)
 
 ```shell
-apt update                   # Refreshes repository index
+sudo apt update              # Refresh repository index
 apt search wget              # Search for a package
 apt show wget                # List information about the wget package
 apt list --all-versions wget # List all versions of the package
-apt install wget             # Install the latest version of the wget package
-apt install wget=1.2.3       # Install a specific version of the wget package
-apt remove wget              # Removes the wget package
-apt upgrade                  # Upgrades all upgradable packages
+sudo apt install wget        # Install the latest version of the wget package
+sudo apt install wget=1.2.3  # Install a specific version of the wget package
+sudo apt remove wget         # Remove the wget package
+sudo apt upgrade             # Upgrade all upgradable packages
 ```
 
 ## Shutdown and Reboot
@@ -409,13 +419,13 @@ reboot -f                    # Force a reboot
 ```shell
 top                    # List all processes interactively
 htop                   # List all processes interactively
-ps all                 # List all processes
+ps aux                 # List processes in BSD-style format
 pidof foo              # Return the PID of all foo processes
 
-CTRL+Z                 # Suspend a process running in the foreground
+CTRL+Z                 # Suspend the foreground process (SIGTSTP)
 bg                     # Resume a suspended process and run in the background
 fg                     # Bring the last background process to the foreground
-fg 1                   # Bring the background process with the PID to the foreground
+fg %1                  # Bring job 1 to the foreground
 
 sleep 30 &             # Sleep for 30 seconds and move the process into the background
 jobs                   # List all background jobs
@@ -432,9 +442,10 @@ lsof -itcp:4000        # Return the process listening on port 4000
 Process priorities go from -20 (highest) to 19 (lowest).
 
 ```shell
-nice -n -20 foo        # Change process priority by name
-renice 20 PID          # Change process priority by PID
-ps -o ni PID           # Return the process priority of PID
+nice -n 10 foo         # Start foo with nice value 10
+sudo nice -n -20 foo   # Start foo with highest priority (requires privileges)
+renice -n 19 -p PID    # Set the nice value of PID to 19
+ps -o ni PID           # Show the nice value of PID
 ```
 
 ## Killing Processes
@@ -442,7 +453,7 @@ ps -o ni PID           # Return the process priority of PID
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#killing-processes)
 
 ```shell
-CTRL+C                 # Kill a process running in the foreground
+CTRL+C                 # Send SIGINT to the foreground process (usually terminates it)
 kill PID               # Shut down process by PID gracefully. Sends TERM signal.
 kill -9 PID            # Force shut down of process by PID. Sends SIGKILL signal.
 pkill foo              # Shut down process by name gracefully. Sends TERM signal.
@@ -473,7 +484,7 @@ Minute, Hour, Day of month, Month, Day of the week
 
 ```shell
 crontab -l                 # List cron tab
-crontab -e                 # Edit cron tab in Vim
+crontab -e                 # Edit cron tab using the configured editor
 crontab /path/crontab      # Load cron tab from a file
 crontab -l > /path/crontab # Save cron tab to a file
 
@@ -488,9 +499,9 @@ crontab -l > /path/crontab # Save cron tab to a file
 at -l                      # List scheduled tasks
 at -c 1                    # Show task with ID 1
 at -r 1                    # Remove task with ID 1
-at now + 2 minutes         # Create a task in Vim to execute in 2 minutes
-at 12:34 PM next month     # Create a task in Vim to execute at 12:34 PM next month
-at tomorrow                # Create a task in Vim to execute tomorrow
+at now + 2 minutes         # Open the at> prompt for a task that runs in 2 minutes
+at 12:34 PM next month     # Open the at> prompt for 12:34 PM next month
+at tomorrow                # Open the at> prompt for a task that runs tomorrow
 ```
 
 ## HTTP Requests
@@ -499,15 +510,16 @@ at tomorrow                # Create a task in Vim to execute tomorrow
 
 ```shell
 curl https://example.com                               # Return response body
-curl -i, --include https://example.com                  # Include status code and HTTP headers
-curl -L, --location https://example.com                 # Follow redirects
-curl -o, --remote-name foo.txt https://example.com      # Output to a text file
-curl -H, --header "User-Agent: Foo" https://example.com # Add a HTTP header
-curl -X, --request POST -H "Content-Type: application/json" -d, --data '{"foo":"bar"}' https://example.com # POST JSON
-curl -X POST -H --data-urlencode foo="bar" http://example.com                           # POST URL Form Encoded
+curl -i, --include https://example.com                        # Include status line and HTTP headers
+curl -L, --location https://example.com                       # Follow redirects
+curl -o foo.txt, --output foo.txt https://example.com         # Save output using a chosen file name
+curl -O, --remote-name https://example.com/file.txt           # Save using the remote file name
+curl -H "User-Agent: Foo", --header "User-Agent: Foo" https://example.com # Add an HTTP header
+curl -X POST, --request POST -H "Content-Type: application/json" -d '{"foo":"bar"}' https://example.com # POST JSON
+curl --data-urlencode 'foo=bar' https://example.com           # POST URL-encoded form data
 
-wget https://example.com/file.txt .                            # Download a file to the current directory
-wget -O, --output-document foo.txt https://example.com/file.txt # Output to a file with the specified name
+wget https://example.com/file.txt                             # Download a file to the current directory
+wget -O foo.txt, --output-document=foo.txt https://example.com/file.txt # Save using a chosen file name
 ```
 
 ## Network Troubleshooting
@@ -519,20 +531,21 @@ ping example.com            # Send multiple ping requests using the ICMP protoco
 ping -c 10 -i 5 example.com # Make 10 attempts, 5 seconds apart
 
 ip addr                     # List IP addresses on the system
-ip route show               # Show IP addresses to router
+ip route show               # Show the routing table
 
-netstat -i, --interfaces     # List all network interfaces and in/out usage
-netstat -l, --listening      # List all open ports
+netstat -i, --interfaces     # List network interfaces (legacy net-tools command)
+netstat -l, --listening      # List listening sockets (legacy net-tools command)
+ss -tuln                    # List listening TCP and UDP sockets (modern alternative)
 
-traceroute example.com      # List all servers the network traffic goes through
+traceroute example.com      # Show the network hops to a destination
 
 mtr -w, --report-wide example.com                                    # Continually list all servers the network traffic goes through
 mtr -r, --report -w, --report-wide -c, --report-cycles 100 example.com # Output a report that lists network traffic 100 times
 
-nmap 0.0.0.0                # Scan for the 1000 most common open ports on localhost
-nmap 0.0.0.0 -p1-65535      # Scan for open ports on localhost between 1 and 65535
-nmap 192.168.4.3            # Scan for the 1000 most common open ports on a remote IP address
-nmap -sP 192.168.1.1/24     # Discover all machines on the network by ping'ing them
+nmap localhost              # Scan the 1000 most common ports on localhost
+nmap localhost -p 1-65535   # Scan ports 1 through 65535 on localhost
+nmap 192.168.4.3            # Scan the 1000 most common ports on a remote IP address
+nmap -sn 192.168.1.0/24     # Host discovery without a port scan
 
 nmtui                       # NetworkManager Text User Interface
 ```
@@ -546,7 +559,7 @@ host example.com            # Show the IPv4 and IPv6 addresses
 
 dig example.com             # Show complete DNS information
 
-cat /etc/resolv.conf        # resolv.conf lists nameservers
+cat /etc/resolv.conf        # Show resolver configuration; often managed automatically
 ```
 
 ## Hardware
@@ -563,7 +576,7 @@ lshw                   # List all hardware
 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#terminal-multiplexers)
 
-Start multiple terminal sessions. Active sessions persist reboots. `tmux` is more modern than `screen`.
+Start multiple terminal sessions. Detached sessions survive terminal or SSH disconnects, but not a system reboot. `tmux` is more modern than `screen`.
 
 ```shell
 tmux             # Start a new session (CTRL-b + d to detach)
@@ -591,8 +604,17 @@ ssh ssh://user@hostname:8765 # Connect to hostname using the user over a custom 
 
 Set default user and port in `~/.ssh/config`, so you can just enter the name next time:
 
+```text
+Host name
+  HostName 127.0.0.1
+  User foo
+  Port 8765
+```
+
+Then connect with:
+
 ```shell
-$ cat ~/.ssh/configHost name  User foo  Hostname 127.0.0.1  Port 8765$ ssh name
+ssh name
 ```
 
 ## Secure Copy
@@ -612,7 +634,7 @@ scp foo.txt ubuntu@hostname:/home/ubuntu # Copy foo.txt into the specified remot
 
 ```shell
 # Always run ls after cd
-function cd {  builtin cd "$@" && ls}
+cd() { builtin cd "$@" && ls; }
 
 # Prompt user before overwriting any files
 alias cp='cp --interactive'
@@ -665,10 +687,12 @@ export FOO=Bar # Set an environment variable
 ```shell
 #!/bin/bash
 
-greet() {  local world = "World"
+greet() {
+  local world="World"
   echo "$1 $world"
-  return "$1 $world"
-}greet "Hello"
+}
+
+greet "Hello"
 greeting=$(greet "Hello")
 ```
 
@@ -692,8 +716,8 @@ echo $?  # Print the last exit code
 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#boolean-operators)
 
-- `$foo` - Is true
-- `!$foo` - Is false
+- `[[ $foo ]]` - True if the string in `foo` is non-empty
+- `[[ ! $foo ]]` - Negates the test
 
 #### Numeric Operators
 
@@ -705,8 +729,12 @@ echo $?  # Print the last exit code
 - `-ge` - Greater than or equal to
 - `-lt` - Less than
 - `-le` - Less than or equal to
-- `-e` foo.txt - Check file exists
-- `-z` foo - Check if variable exists
+
+#### File Operators
+
+- `-e foo.txt` - File or directory exists
+- `-f foo.txt` - Regular file exists
+- `-d foo` - Directory exists
 
 #### String Operators
 
@@ -726,11 +754,11 @@ echo $?  # Print the last exit code
 ```shell
 #!/bin/bash
 
-if [[$foo = 'bar']]; then
+if [[ $foo == 'bar' ]]; then
   echo 'one'
-elif [[$foo = 'bar']] || [[$foo = 'baz']]; then
+elif [[ $foo == 'baz' ]] || [[ $foo == 'bat' ]]; then
   echo 'two'
-elif [[$foo = 'ban']] && [[$USER = 'bat']]; then
+elif [[ $foo == 'ban' ]] && [[ $USER == 'rehan' ]]; then
   echo 'three'
 else
   echo 'four'
@@ -754,10 +782,10 @@ fi
 ```shell
 #!/bin/bash
 
-declare -i countercounter=10
-while [$counter -gt 2]; do
-  echo The counter is $counter
-  counter=counter-1
+declare -i counter=10
+while [[ $counter -gt 2 ]]; do
+  echo "The counter is $counter"
+  ((counter--))
 done
 ```
 
@@ -768,18 +796,17 @@ done
 ```shell
 #!/bin/bash
 
-for i in {0..10..2}  do
-    echo "Index: $i"
-  done
+for i in {0..10..2}; do
+  echo "Index: $i"
+done
 
-for filename in file1 file2 file3  do
-    echo "Content: " >> $filename
-  done
+for filename in file1 file2 file3; do
+  echo "Content: " >> "$filename"
+done
 
-for filename in *;
-  do
-    echo "Content: " >> $filename
-  done
+for filename in *; do
+  echo "Content: " >> "$filename"
+done
 ```
 
 #### Case Statements
@@ -793,10 +820,17 @@ echo "What's the weather like tomorrow?"
 read weather
 
 case $weather in
-  sunny | warm ) echo "Nice weather: " $weather
-  ;;  cloudy | cool ) echo "Not bad weather: " $weather
-  ;;  rainy | cold ) echo "Terrible weather: " $weather
-  ;;  * ) echo "Don't understand"
-  ;;
+  sunny | warm)
+    echo "Nice weather: $weather"
+    ;;
+  cloudy | cool)
+    echo "Not bad weather: $weather"
+    ;;
+  rainy | cold)
+    echo "Terrible weather: $weather"
+    ;;
+  *)
+    echo "Don't understand"
+    ;;
 esac
 ```
