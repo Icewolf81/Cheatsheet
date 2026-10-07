@@ -15,10 +15,10 @@ A cheat sheet for bash commands.
 !!            # Run the last command
 
 CTRL+r        # Search bash history (hit CTRL+r multiple times to find multiple occurrences)
-history -c      # Clear the current shell history
+history -c    # Clear the current shell history
 
 touch foo.sh              # Create foo.sh
-chmod +x !$                # !$ is the last argument of the last command, i.e. foo.sh
+chmod +x !$               # !$ is the last argument of the last command, i.e. foo.sh
 ```
 
 ## Navigating Directories
@@ -26,26 +26,26 @@ chmod +x !$                # !$ is the last argument of the last command, i.e. f
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#navigating-directories)
 
 ```shell
-pwd                       # Print current directory path
-clear, CTRL+L             # Clear the terminal screen
-ls                        # List files and directories
-ls -a, --all             # List files and directories including hidden
-ls -l                     # List files and directories in long form
-ls -l -h, --human-readable # Long format with human-readable sizes
-ls -t                     # List files and directories by modification time, newest first
-stat foo.txt              # Show file metadata such as size and timestamps
-stat foo                  # Show directory metadata such as size and timestamps
-tree                      # List directory and file tree
-tree -a                   # List directory and file tree including hidden
-tree -d                   # List directory tree
-cd foo                    # Go to foo sub-directory
-cd /                      # Go to root directory
-cd                        # Go to home directory
-cd ~                      # Go to home directory
-cd ..                     # Go to parent directory
-cd -                      # Go to previous directory
-pushd foo                 # Go to foo sub-directory and add previous directory to stack
-popd                      # Go back to directory in stack saved by `pushd`
+pwd                         # Print current directory path
+clear, CTRL+L               # Clear the terminal screen
+ls                          # List files and directories
+ls -a, --all                # List files and directories including hidden
+ls -l                       # List files and directories in long form
+ls -l -h, --human-readable  # Long format with human-readable sizes
+ls -t                       # List files and directories by modification time, newest first
+stat foo.txt                # Show file metadata such as size and timestamps
+stat foo                    # Show directory metadata such as size and timestamps
+tree                        # List directory and file tree
+tree -a                     # List directory and file tree including hidden
+tree -d                     # List directory tree
+cd foo                      # Go to foo sub-directory
+cd /                        # Go to root directory
+cd                          # Go to home directory
+cd ~                        # Go to home directory
+cd ..                       # Go to parent directory
+cd -                        # Go to previous directory
+pushd foo                   # Go to foo sub-directory and add previous directory to stack
+popd                        # Go back to directory in stack saved by `pushd`
 
 ```
 Warning: Some Windows `cd` habits do not work the same way in Bash.
@@ -66,8 +66,8 @@ Warning: Some Windows `cd` habits do not work the same way in Bash.
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#creating-directories)
 
 ```shell
-mkdir foo                        # Create a directory
-mkdir foo bar                    # Create multiple directories
+mkdir foo                         # Create a directory
+mkdir foo bar                     # Create multiple directories
 mkdir -p, --parents foo/bar       # Create nested directory
 mkdir -p, --parents {foo,bar}/baz # Create multiple nested directories
 
@@ -79,13 +79,13 @@ mktemp -d, --directory            # Create a temporary directory
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#moving-directories)
 
 ```shell
-cp -R, --recursive foo bar                               # Copy directory
-mv foo bar                                              # Move directory
+cp -R, --recursive foo bar                                     # Copy directory
+mv foo bar                                                     # Move directory
 
 rsync -r, --recursive -z, --compress -v, --verbose /foo/ /bar/ # Copy directory recursively
 rsync -a, --archive -z, --compress -v, --verbose /foo/ /bar/   # Copy directory in archive mode and preserve attributes
-rsync -avz /foo username@hostname:/bar                  # Copy local directory to remote directory
-rsync -avz username@hostname:/foo /bar                  # Copy remote directory to local directory
+rsync -avz /foo username@hostname:/bar                         # Copy local directory to remote directory
+rsync -avz username@hostname:/foo /bar                         # Copy remote directory to local directory
 ```
 
 ## Deleting Directories
@@ -93,8 +93,8 @@ rsync -avz username@hostname:/foo /bar                  # Copy remote directory 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#deleting-directories)
 
 ```shell
-rmdir foo                        # Delete empty directory
-rm -r, --recursive foo            # Delete directory including contents
+rmdir foo                          # Delete empty directory
+rm -r, --recursive foo             # Delete directory including contents
 rm -r, --recursive -f, --force foo # Delete directory including contents, ignore nonexistent files and never prompt
 ```
 
@@ -123,7 +123,7 @@ echo "foo" >> bar.txt      # Append to file with content
 ls exists 1> stdout.txt    # Redirect the standard output to a file
 ls noexist 2> stderror.txt # Redirect the standard error output to a file
 ls > out.txt 2>&1          # Redirect standard output and standard error to a file
-ls > /dev/null 2>&1         # Discard standard output and standard error
+ls > /dev/null 2>&1        # Discard standard output and standard error
 
 read foo                   # Read from standard input and write to the variable foo
 ```
@@ -133,11 +133,11 @@ read foo                   # Read from standard input and write to the variable 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#moving-files)
 
 ```shell
-cp foo.txt bar.txt                                # Copy file
-mv foo.txt bar.txt                                # Move file
+cp foo.txt bar.txt                                    # Copy file
+mv foo.txt bar.txt                                    # Move file
 
-rsync -z, --compress -v, --verbose /foo.txt /bar    # Copy file quickly if not changed
-rsync -z, --compress -v, --verbose /foo.txt /bar.txt # Copy and rename file quickly if not changed
+rsync -z, --compress -v, --verbose /foo.txt /bar      # Copy file quickly if not changed
+rsync -z, --compress -v, --verbose /foo.txt /bar.txt  # Copy and rename file quickly if not changed
 ```
 
 ## Deleting Files
@@ -145,8 +145,8 @@ rsync -z, --compress -v, --verbose /foo.txt /bar.txt # Copy and rename file quic
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#deleting-files)
 
 ```shell
-rm foo.txt            # Delete file
-rm -f, --force foo.txt # Delete file, ignore nonexistent files and never prompt
+rm foo.txt              # Delete file
+rm -f, --force foo.txt  # Delete file, ignore nonexistent files and never prompt
 ```
 
 ## Reading Files
@@ -226,16 +226,16 @@ locate 'f*.txt'                            # Find a text file starting with 'f'
 `find` doesn't use an index and is slow.
 
 ```shell
-find /path -name foo.txt                   # Find a file
-find /path -iname foo.txt                  # Find a file with case insensitive search
-find /path -name "*.txt"                   # Find all text files
-find /path -name foo.txt -delete           # Find a file and delete it
-find /path -name "*.png" -exec pngquant {} \; # Find all .png files and execute pngquant on each one
-find /path -type f -name foo.txt           # Find a file
-find /path -type d -name foo               # Find a directory
-find /path -type l -name foo.txt           # Find a symbolic link
-find /path -type f -mtime +30              # Find files that haven't been modified in 30 days
-find /path -type f -mtime +30 -delete      # Delete files that haven't been modified in 30 days
+find /path -name foo.txt                       # Find a file
+find /path -iname foo.txt                      # Find a file with case insensitive search
+find /path -name "*.txt"                       # Find all text files
+find /path -name foo.txt -delete               # Find a file and delete it
+find /path -name "*.png" -exec pngquant {} \;  # Find all .png files and execute pngquant on each one
+find /path -type f -name foo.txt               # Find a file
+find /path -type d -name foo                   # Find a directory
+find /path -type l -name foo.txt               # Find a symbolic link
+find /path -type f -mtime +30                  # Find files that haven't been modified in 30 days
+find /path -type f -mtime +30 -delete          # Delete files that haven't been modified in 30 days
 ```
 
 ## Find in Files
@@ -243,7 +243,7 @@ find /path -type f -mtime +30 -delete      # Delete files that haven't been modi
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#find-in-files)
 
 ```shell
-grep 'foo' /bar.txt                         # Search for 'foo' in file 'bar.txt'
+grep 'foo' /bar.txt                          # Search for 'foo' in file 'bar.txt'
 grep -r, --recursive 'foo' /bar              # Search for 'foo' in directory 'bar'
 grep -R, --dereference-recursive 'foo' /bar  # Search for 'foo' in directory 'bar' and follow symbolic links
 grep -l, --files-with-matches 'foo' /bar     # Show only files that match
@@ -255,9 +255,9 @@ grep -v, --invert-match 'foo' /bar           # Show only lines that don't match
 grep -c, --count 'foo' /bar                  # Count matching lines
 grep -n, --line-number 'foo' /bar            # Add line numbers
 grep --color=auto 'foo' /bar                 # Add colour to output
-grep -R 'foo\|bar' /baz                     # Search for 'foo' or 'bar' using a basic regular expression
+grep -R 'foo\|bar' /baz                      # Search for 'foo' or 'bar' using a basic regular expression
 grep -R -E, --extended-regexp 'foo|bar' /baz # Use extended regular expressions
-egrep -R 'foo|bar' /baz                     # Legacy alias; prefer grep -E
+egrep -R 'foo|bar' /baz                      # Legacy alias; prefer grep -E
 ```
 
 ### Replace in Files
@@ -265,11 +265,11 @@ egrep -R 'foo|bar' /baz                     # Legacy alias; prefer grep -E
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#replace-in-files)
 
 ```shell
-sed 's/fox/bear/g' foo.txt               # Replace fox with bear in foo.txt and output to console
-sed 's/fox/bear/gi' foo.txt              # Replace fox (case insensitive) with bear in foo.txt and output to console
-sed 's/red fox/blue bear/g' foo.txt      # Replace the exact text 'red fox' with 'blue bear'
-sed 's/fox/bear/g' foo.txt > bar.txt     # Replace fox with bear in foo.txt and save in bar.txt
-sed -i, --in-place 's/fox/bear/g' foo.txt # Replace fox with bear and overwrite foo.txt
+sed 's/fox/bear/g' foo.txt                 # Replace fox with bear in foo.txt and output to console
+sed 's/fox/bear/gi' foo.txt                # Replace fox (case insensitive) with bear in foo.txt and output to console
+sed 's/red fox/blue bear/g' foo.txt        # Replace the exact text 'red fox' with 'blue bear'
+sed 's/fox/bear/g' foo.txt > bar.txt       # Replace fox with bear in foo.txt and save in bar.txt
+sed -i, --in-place 's/fox/bear/g' foo.txt  # Replace fox with bear and overwrite foo.txt
 ```
 
 ## Symbolic Links
@@ -277,9 +277,9 @@ sed -i, --in-place 's/fox/bear/g' foo.txt # Replace fox with bear and overwrite 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#symbolic-links)
 
 ```shell
-ln -s, --symbolic foo bar            # Create a link 'bar' to the 'foo' folder
-ln -s, --symbolic -f, --force foo bar # Overwrite an existing symbolic link 'bar'
-ls -l                               # Show where symbolic links are pointing
+ln -s, --symbolic foo bar              # Create a link 'bar' to the 'foo' folder
+ln -s, --symbolic -f, --force foo bar  # Overwrite an existing symbolic link 'bar'
+ls -l                                  # Show where symbolic links are pointing
 ```
 
 ## Compressing Files
@@ -293,10 +293,10 @@ ls -l                               # Show where symbolic links are pointing
 Compresses one or more files into *.zip files.
 
 ```shell
-zip foo.zip /bar.txt                # Compress bar.txt into foo.zip
-zip foo.zip /bar.txt /baz.txt       # Compress bar.txt and baz.txt into foo.zip
-zip foo.zip /{bar,baz}.txt          # Compress bar.txt and baz.txt into foo.zip
-zip -r, --recurse-paths foo.zip /bar # Compress directory bar into foo.zip
+zip foo.zip /bar.txt                  # Compress bar.txt into foo.zip
+zip foo.zip /bar.txt /baz.txt         # Compress bar.txt and baz.txt into foo.zip
+zip foo.zip /{bar,baz}.txt            # Compress bar.txt and baz.txt into foo.zip
+zip -r, --recurse-paths foo.zip /bar  # Compress directory bar into foo.zip
 ```
 
 ### gzip
@@ -318,7 +318,7 @@ gzip -c /bar.txt > foo.gz      # Compress bar.txt and write the result to foo.gz
 Compresses (optionally) and combines one or more files into a single *.tar, *.tar.gz, *.tpz or *.tgz file.
 
 ```shell
-tar -czf foo.tgz /bar.txt /baz.txt              # Create a gzip-compressed archive from two files
+tar -czf foo.tgz /bar.txt /baz.txt               # Create a gzip-compressed archive from two files
 tar -czf foo.tgz /{bar,baz}.txt                  # Create a gzip-compressed archive using brace expansion
 tar -czf foo.tgz /bar                            # Create a gzip-compressed archive from a directory
 tar --create --gzip --file=foo.tgz /bar          # Same using long options
@@ -341,8 +341,8 @@ unzip foo.zip          # Unzip foo.zip into current directory
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#gunzip)
 
 ```shell
-gunzip foo.gz           # Unzip foo.gz into current directory and delete foo.gz
-gunzip -k, --keep foo.gz # Unzip foo.gz into current directory
+gunzip foo.gz             # Unzip foo.gz into current directory and delete foo.gz
+gunzip -k, --keep foo.gz  # Unzip foo.gz into current directory
 ```
 
 ### tar -x
@@ -350,8 +350,8 @@ gunzip -k, --keep foo.gz # Unzip foo.gz into current directory
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#tar--x)
 
 ```shell
-tar -xzf foo.tar.gz       # Extract a gzip-compressed tar archive
-tar -xf foo.tar            # Extract an uncompressed tar archive
+tar -xzf foo.tar.gz         # Extract a gzip-compressed tar archive
+tar -xf foo.tar             # Extract an uncompressed tar archive
 ```
 
 ## Disk Usage
@@ -359,14 +359,14 @@ tar -xf foo.tar            # Extract an uncompressed tar archive
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#disk-usage)
 
 ```shell
-df                     # List filesystems, used and available space
-df -h, --human-readable # List disks, size, used and available space in a human readable format
+df                       # List filesystems, used and available space
+df -h, --human-readable  # List disks, size, used and available space in a human readable format
 
-du                     # Show disk usage of the current directory and subdirectories
-du /foo/bar            # List specified directory, subdirectories and file sizes
-du -h, --human-readable # List current directory, subdirectories and file sizes in a human readable format
-du -d 1, --max-depth=1  # List sizes down to a maximum depth of 1
-du -d 0, --max-depth=0  # List only the current directory size
+du                       # Show disk usage of the current directory and subdirectories
+du /foo/bar              # List specified directory, subdirectories and file sizes
+du -h, --human-readable  # List current directory, subdirectories and file sizes in a human readable format
+du -d 1, --max-depth=1   # List sizes down to a maximum depth of 1
+du -d 0, --max-depth=0   # List only the current directory size
 ```
 
 ## Memory Usage
@@ -374,10 +374,10 @@ du -d 0, --max-depth=0  # List only the current directory size
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#memory-usage)
 
 ```shell
-free                   # Show memory usage
-free -h, --human        # Show human readable memory usage
-free -h, --human --si   # Show human readable memory usage in power of 1000 instead of 1024
-free -s 5, --seconds 5  # Show memory usage and update continuously every five seconds
+free                     # Show memory usage
+free -h, --human         # Show human readable memory usage
+free -h, --human --si    # Show human readable memory usage in power of 1000 instead of 1024
+free -s 5, --seconds 5   # Show memory usage and update continuously every five seconds
 ```
 
 ## Logs & System Debugging
@@ -391,8 +391,8 @@ journalctl -f                # Follow logs in real time
 journalctl -k                # Kernel logs from the systemd journal
 
 dmesg | tail                 # Recent kernel messages
-tail -f /var/log/syslog     # Live system logs on many Debian/Ubuntu systems
-tail -f /var/log/messages   # Live system logs on many RHEL/Fedora/CentOS Stream systems
+tail -f /var/log/syslog      # Live system logs on many Debian/Ubuntu systems
+tail -f /var/log/messages    # Live system logs on many RHEL/Fedora/CentOS Stream systems
 ```
 
 ## Packages
@@ -526,17 +526,17 @@ at tomorrow                # Open the at> prompt for a task that runs tomorrow
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#http-requests)
 
 ```shell
-curl https://example.com                               # Return response body
-curl -i, --include https://example.com                        # Include status line and HTTP headers
-curl -L, --location https://example.com                       # Follow redirects
-curl -o foo.txt, --output foo.txt https://example.com         # Save output using a chosen file name
-curl -O, --remote-name https://example.com/file.txt           # Save using the remote file name
-curl -H "User-Agent: Foo", --header "User-Agent: Foo" https://example.com # Add an HTTP header
-curl -X POST, --request POST -H "Content-Type: application/json" -d '{"foo":"bar"}' https://example.com # POST JSON
-curl --data-urlencode 'foo=bar' https://example.com           # POST URL-encoded form data
+curl https://example.com                                                                                   # Return response body
+curl -i, --include https://example.com                                                                     # Include status line and HTTP headers
+curl -L, --location https://example.com                                                                    # Follow redirects
+curl -o foo.txt, --output foo.txt https://example.com                                                      # Save output using a chosen file name
+curl -O, --remote-name https://example.com/file.txt                                                        # Save using the remote file name
+curl -H "User-Agent: Foo", --header "User-Agent: Foo" https://example.com                                  # Add an HTTP header
+curl -X POST, --request POST -H "Content-Type: application/json" -d '{"foo":"bar"}' https://example.com    # POST JSON
+curl --data-urlencode 'foo=bar' https://example.com                                                        # POST URL-encoded form data
 
-wget https://example.com/file.txt                             # Download a file to the current directory
-wget -O foo.txt, --output-document=foo.txt https://example.com/file.txt # Save using a chosen file name
+wget https://example.com/file.txt                                                                          # Download a file to the current directory
+wget -O foo.txt, --output-document=foo.txt https://example.com/file.txt                                    # Save using a chosen file name
 ```
 
 ## Network Troubleshooting
@@ -544,27 +544,27 @@ wget -O foo.txt, --output-document=foo.txt https://example.com/file.txt # Save u
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#network-troubleshooting)
 
 ```shell
-ping example.com            # Send multiple ping requests using the ICMP protocol
-ping -c 10 -i 5 example.com # Make 10 attempts, 5 seconds apart
+ping example.com                                                               # Send multiple ping requests using the ICMP protocol
+ping -c 10 -i 5 example.com                                                    # Make 10 attempts, 5 seconds apart
 
-ip addr                     # List IP addresses on the system
-ip route show               # Show the routing table
+ip addr                                                                        # List IP addresses on the system
+ip route show                                                                  # Show the routing table
 
-netstat -i, --interfaces     # List network interfaces (legacy net-tools command)
-netstat -l, --listening      # List listening sockets (legacy net-tools command)
-ss -tuln                    # List listening TCP and UDP sockets (modern alternative)
+netstat -i, --interfaces                                                       # List network interfaces (legacy net-tools command)
+netstat -l, --listening                                                        # List listening sockets (legacy net-tools command)
+ss -tuln                                                                       # List listening TCP and UDP sockets (modern alternative)
 
-traceroute example.com      # Show the network hops to a destination
+traceroute example.com                                                         # Show the network hops to a destination
 
-mtr -w, --report-wide example.com                                    # Continually list all servers the network traffic goes through
-mtr -r, --report -w, --report-wide -c 100, --report-cycles 100 example.com # Output a report that lists network traffic 100 times
+mtr -w, --report-wide example.com                                              # Continually list all servers the network traffic goes through
+mtr -r, --report -w, --report-wide -c 100, --report-cycles 100 example.com     # Output a report that lists network traffic 100 times
 
-nmap localhost              # Scan the 1000 most common ports on localhost
-nmap localhost -p 1-65535   # Scan ports 1 through 65535 on localhost
-nmap 192.168.4.3            # Scan the 1000 most common ports on a remote IP address
-nmap -sn 192.168.1.0/24     # Host discovery without a port scan
+nmap localhost                                                                 # Scan the 1000 most common ports on localhost
+nmap localhost -p 1-65535                                                      # Scan ports 1 through 65535 on localhost
+nmap 192.168.4.3                                                               # Scan the 1000 most common ports on a remote IP address
+nmap -sn 192.168.1.0/24                                                        # Host discovery without a port scan
 
-nmtui                       # NetworkManager Text User Interface
+nmtui                                                                          # NetworkManager Text User Interface
 ```
 
 ## DNS
@@ -586,7 +586,7 @@ cat /etc/resolv.conf        # Show resolver configuration; often managed automat
 ```shell
 lsusb                  # List USB devices
 lspci                  # List PCI hardware
-sudo lshw             # List detailed hardware information
+sudo lshw              # List detailed hardware information
 ```
 
 ## Terminal Multiplexers
