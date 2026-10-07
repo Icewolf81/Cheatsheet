@@ -12,13 +12,13 @@ A cheat sheet for bash commands.
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#command-history)
 
 ```shell
-!!            # Run the last command
+!!                  # Run the last command
 
-CTRL+r        # Search bash history (hit CTRL+r multiple times to find multiple occurrences)
-history -c    # Clear the current shell history
+CTRL+r              # Search bash history (hit CTRL+r multiple times to find multiple occurrences)
+history -c          # Clear the current shell history
 
-touch foo.sh              # Create foo.sh
-chmod +x !$               # !$ is the last argument of the last command, i.e. foo.sh
+touch foo.sh        # Create foo.sh
+chmod +x !$         # !$ is the last argument of the last command, i.e. foo.sh
 ```
 
 ## Navigating Directories
