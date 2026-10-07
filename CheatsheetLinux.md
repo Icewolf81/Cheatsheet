@@ -4,6 +4,9 @@ Bash Cheat Sheet
 
 A cheat sheet for bash commands.
 
+> **Hinweis:** Bei Befehlsoptionen kennzeichnet ein Komma alternative Schreibweisen.  
+> Beispiel: `ls -a, --all` bedeutet `ls -a` oder `ls --all`.
+
 ## Command History
 
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#command-history)
@@ -23,9 +26,9 @@ touch foo.shchmod +x !$   # !$ is the last argument of the last command i.e. foo
 ```shell
 pwd                       # Print current directory path
 ls                        # List directories
-ls -a|--all               # List directories including hidden
+ls -a, --all               # List directories including hidden
 ls -l                     # List directories in long form
-ls -l -h|--human-readable # List directories in long form with human readable sizes
+ls -l -h, --human-readable # List directories in long form with human readable sizes
 ls -t                     # List directories by modification time, newest first
 stat foo.txt              # List size, created and modified timestamps for a file
 stat foo                  # List size, created and modified timestamps for a directory
@@ -47,10 +50,10 @@ popd                      # Go back to directory in stack saved by `pushd`
 ```shell
 mkdir foo                        # Create a directory
 mkdir foo bar                    # Create multiple directories
-mkdir -p|--parents foo/bar       # Create nested directory
-mkdir -p|--parents {foo,bar}/baz # Create multiple nested directories
+mkdir -p, --parents foo/bar       # Create nested directory
+mkdir -p, --parents {foo,bar}/baz # Create multiple nested directories
 
-mktemp -d|--directory            # Create a temporary directory
+mktemp -d, --directory            # Create a temporary directory
 ```
 
 ## Moving Directories
@@ -58,11 +61,11 @@ mktemp -d|--directory            # Create a temporary directory
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#moving-directories)
 
 ```shell
-cp -R|--recursive foo bar                               # Copy directory
+cp -R, --recursive foo bar                               # Copy directory
 mv foo bar                                              # Move directory
 
-rsync -z|--compress -v|--verbose /foo /bar              # Copy directory, overwrites destination
-rsync -a|--archive -z|--compress -v|--verbose /foo /bar # Copy directory, without overwriting destination
+rsync -z, --compress -v, --verbose /foo /bar              # Copy directory, overwrites destination
+rsync -a, --archive -z, --compress -v, --verbose /foo /bar # Copy directory, without overwriting destination
 rsync -avz /foo username@hostname:/bar                  # Copy local directory to remote directory
 rsync -avz username@hostname:/foo /bar                  # Copy remote directory to local directory
 ```
@@ -73,8 +76,8 @@ rsync -avz username@hostname:/foo /bar                  # Copy remote directory 
 
 ```shell
 rmdir foo                        # Delete empty directory
-rm -r|--recursive foo            # Delete directory including contents
-rm -r|--recursive -f|--force foo # Delete directory including contents, ignore nonexistent files and never prompt
+rm -r, --recursive foo            # Delete directory including contents
+rm -r, --recursive -f, --force foo # Delete directory including contents, ignore nonexistent files and never prompt
 ```
 
 ## Creating Files
@@ -115,8 +118,8 @@ read foo                   # Read from standard input and write to the variable 
 cp foo.txt bar.txt                                # Copy file
 mv foo.txt bar.txt                                # Move file
 
-rsync -z|--compress -v|--verbose /foo.txt /bar    # Copy file quickly if not changed
-rsync z|--compress -v|--verbose /foo.txt /bar.txt # Copy and rename file quickly if not changed
+rsync -z, --compress -v, --verbose /foo.txt /bar    # Copy file quickly if not changed
+rsync z|--compress -v, --verbose /foo.txt /bar.txt # Copy and rename file quickly if not changed
 ```
 
 ## Deleting Files
@@ -125,7 +128,7 @@ rsync z|--compress -v|--verbose /foo.txt /bar.txt # Copy and rename file quickly
 
 ```shell
 rm foo.txt            # Delete file
-rm -f|--force foo.txt # Delete file, ignore nonexistent files and never prompt
+rm -f, --force foo.txt # Delete file, ignore nonexistent files and never prompt
 ```
 
 ## Reading Files
@@ -223,16 +226,16 @@ find /path -type f -mtime +30 -delete      # Delete files that haven't been modi
 
 ```shell
 grep 'foo' /bar.txt                         # Search for 'foo' in file 'bar.txt'
-grep 'foo' /bar -r|--recursive              # Search for 'foo' in directory 'bar'
-grep 'foo' /bar -R|--dereference-recursive  # Search for 'foo' in directory 'bar' and follow symbolic links
-grep 'foo' /bar -l|--files-with-matches     # Show only files that match
-grep 'foo' /bar -L|--files-without-match    # Show only files that don't match
-grep 'Foo' /bar -i|--ignore-case            # Case insensitive search
-grep 'foo' /bar -x|--line-regexp            # Match the entire line
-grep 'foo' /bar -C|--context 1              # Add N line of context above and below each search result
-grep 'foo' /bar -v|--invert-match           # Show only lines that don't match
-grep 'foo' /bar -c|--count                  # Count the number lines that match
-grep 'foo' /bar -n|--line-number            # Add line numbers
+grep 'foo' /bar -r, --recursive              # Search for 'foo' in directory 'bar'
+grep 'foo' /bar -R, --dereference-recursive  # Search for 'foo' in directory 'bar' and follow symbolic links
+grep 'foo' /bar -l, --files-with-matches     # Show only files that match
+grep 'foo' /bar -L, --files-without-match    # Show only files that don't match
+grep 'Foo' /bar -i, --ignore-case            # Case insensitive search
+grep 'foo' /bar -x, --line-regexp            # Match the entire line
+grep 'foo' /bar -C, --context 1              # Add N line of context above and below each search result
+grep 'foo' /bar -v, --invert-match           # Show only lines that don't match
+grep 'foo' /bar -c, --count                  # Count the number lines that match
+grep 'foo' /bar -n, --line-number            # Add line numbers
 grep 'foo' /bar --colour                    # Add colour to output
 grep 'foo\|bar' /baz -R                     # Search for 'foo' or 'bar' in directory 'baz'
 grep --extended-regexp|-E 'foo|bar' /baz -R # Use regular expressions
@@ -248,7 +251,7 @@ sed 's/fox/bear/g' foo.txt               # Replace fox with bear in foo.txt and 
 sed 's/fox/bear/gi' foo.txt              # Replace fox (case insensitive) with bear in foo.txt and output to console
 sed 's/red fox/blue bear/g' foo.txt      # Replace red with blue and fox with bear in foo.txt and output to console
 sed 's/fox/bear/g' foo.txt > bar.txt     # Replace fox with bear in foo.txt and save in bar.txt
-sed 's/fox/bear/g' foo.txt -i|--in-place # Replace fox with bear and overwrite foo.txt
+sed 's/fox/bear/g' foo.txt -i, --in-place # Replace fox with bear and overwrite foo.txt
 ```
 
 ## Symbolic Links
@@ -256,8 +259,8 @@ sed 's/fox/bear/g' foo.txt -i|--in-place # Replace fox with bear and overwrite f
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#symbolic-links)
 
 ```shell
-ln -s|--symbolic foo bar            # Create a link 'bar' to the 'foo' folder
-ln -s|--symbolic -f|--force foo bar # Overwrite an existing symbolic link 'bar'
+ln -s, --symbolic foo bar            # Create a link 'bar' to the 'foo' folder
+ln -s, --symbolic -f, --force foo bar # Overwrite an existing symbolic link 'bar'
 ls -l                               # Show where symbolic links are pointing
 ```
 
@@ -275,7 +278,7 @@ Compresses one or more files into *.zip files.
 zip foo.zip /bar.txt                # Compress bar.txt into foo.zip
 zip foo.zip /bar.txt /baz.txt       # Compress bar.txt and baz.txt into foo.zip
 zip foo.zip /{bar,baz}.txt          # Compress bar.txt and baz.txt into foo.zip
-zip -r|--recurse-paths foo.zip /bar # Compress directory bar into foo.zip
+zip -r, --recurse-paths foo.zip /bar # Compress directory bar into foo.zip
 ```
 
 ### gzip
@@ -286,7 +289,7 @@ Compresses a single file into *.gz files.
 
 ```shell
 gzip /bar.txt foo.gz           # Compress bar.txt into foo.gz and then delete bar.txt
-gzip -k|--keep /bar.txt foo.gz # Compress bar.txt into foo.gz
+gzip -k, --keep /bar.txt foo.gz # Compress bar.txt into foo.gz
 ```
 
 ### tar -c
@@ -296,9 +299,9 @@ gzip -k|--keep /bar.txt foo.gz # Compress bar.txt into foo.gz
 Compresses (optionally) and combines one or more files into a single *.tar, *.tar.gz, *.tpz or *.tgz file.
 
 ```shell
-tar -c|--create -z|--gzip -f|--file=foo.tgz /bar.txt /baz.txt # Compress bar.txt and baz.txt into foo.tgz
-tar -c|--create -z|--gzip -f|--file=foo.tgz /{bar,baz}.txt    # Compress bar.txt and baz.txt into foo.tgz
-tar -c|--create -z|--gzip -f|--file=foo.tgz /bar              # Compress directory bar into foo.tgz
+tar -c, --create -z, --gzip -f, --file=foo.tgz /bar.txt /baz.txt # Compress bar.txt and baz.txt into foo.tgz
+tar -c, --create -z, --gzip -f, --file=foo.tgz /{bar,baz}.txt    # Compress bar.txt and baz.txt into foo.tgz
+tar -c, --create -z, --gzip -f, --file=foo.tgz /bar              # Compress directory bar into foo.tgz
 ```
 
 ## Decompressing Files
@@ -319,7 +322,7 @@ unzip foo.zip          # Unzip foo.zip into current directory
 
 ```shell
 gunzip foo.gz           # Unzip foo.gz into current directory and delete foo.gz
-gunzip -k|--keep foo.gz # Unzip foo.gz into current directory
+gunzip -k, --keep foo.gz # Unzip foo.gz into current directory
 ```
 
 ### tar -x
@@ -327,8 +330,8 @@ gunzip -k|--keep foo.gz # Unzip foo.gz into current directory
 [](https://github.com/RehanSaeed/Bash-Cheat-Sheet#tar--x)
 
 ```shell
-tar -x|--extract -z|--gzip -f|--file=foo.tar.gz # Un-compress foo.tar.gz into current directory
-tar -x|--extract -f|--file=foo.tar              # Un-combine foo.tar into current directory
+tar -x, --extract -z, --gzip -f, --file=foo.tar.gz # Un-compress foo.tar.gz into current directory
+tar -x, --extract -f, --file=foo.tar              # Un-combine foo.tar into current directory
 ```
 
 ## Disk Usage
@@ -337,12 +340,12 @@ tar -x|--extract -f|--file=foo.tar              # Un-combine foo.tar into curren
 
 ```shell
 df                     # List disks, size, used and available space
-df -h|--human-readable # List disks, size, used and available space in a human readable format
+df -h, --human-readable # List disks, size, used and available space in a human readable format
 
 du                     # List current directory, subdirectories and file sizes
 du /foo/bar            # List specified directory, subdirectories and file sizes
-du -h|--human-readable # List current directory, subdirectories and file sizes in a human readable format
-du -d|--max-depth      # List current directory, subdirectories and file sizes within the max depth
+du -h, --human-readable # List current directory, subdirectories and file sizes in a human readable format
+du -d, --max-depth      # List current directory, subdirectories and file sizes within the max depth
 du -d 0                # List current directory size
 ```
 
@@ -352,9 +355,9 @@ du -d 0                # List current directory size
 
 ```shell
 free                   # Show memory usage
-free -h|--human        # Show human readable memory usage
-free -h|--human --si   # Show human readable memory usage in power of 1000 instead of 1024
-free -s|--seconds 5    # Show memory usage and update continuously every five seconds
+free -h, --human        # Show human readable memory usage
+free -h, --human --si   # Show human readable memory usage in power of 1000 instead of 1024
+free -s, --seconds 5    # Show memory usage and update continuously every five seconds
 ```
 
 ## Logs & System Debugging
@@ -496,15 +499,15 @@ at tomorrow                # Create a task in Vim to execute tomorrow
 
 ```shell
 curl https://example.com                               # Return response body
-curl -i|--include https://example.com                  # Include status code and HTTP headers
-curl -L|--location https://example.com                 # Follow redirects
-curl -o|--remote-name foo.txt https://example.com      # Output to a text file
-curl -H|--header "User-Agent: Foo" https://example.com # Add a HTTP header
-curl -X|--request POST -H "Content-Type: application/json" -d|--data '{"foo":"bar"}' https://example.com # POST JSON
+curl -i, --include https://example.com                  # Include status code and HTTP headers
+curl -L, --location https://example.com                 # Follow redirects
+curl -o, --remote-name foo.txt https://example.com      # Output to a text file
+curl -H, --header "User-Agent: Foo" https://example.com # Add a HTTP header
+curl -X, --request POST -H "Content-Type: application/json" -d, --data '{"foo":"bar"}' https://example.com # POST JSON
 curl -X POST -H --data-urlencode foo="bar" http://example.com                           # POST URL Form Encoded
 
 wget https://example.com/file.txt .                            # Download a file to the current directory
-wget -O|--output-document foo.txt https://example.com/file.txt # Output to a file with the specified name
+wget -O, --output-document foo.txt https://example.com/file.txt # Output to a file with the specified name
 ```
 
 ## Network Troubleshooting
@@ -518,13 +521,13 @@ ping -c 10 -i 5 example.com # Make 10 attempts, 5 seconds apart
 ip addr                     # List IP addresses on the system
 ip route show               # Show IP addresses to router
 
-netstat -i|--interfaces     # List all network interfaces and in/out usage
-netstat -l|--listening      # List all open ports
+netstat -i, --interfaces     # List all network interfaces and in/out usage
+netstat -l, --listening      # List all open ports
 
 traceroute example.com      # List all servers the network traffic goes through
 
-mtr -w|--report-wide example.com                                    # Continually list all servers the network traffic goes through
-mtr -r|--report -w|--report-wide -c|--report-cycles 100 example.com # Output a report that lists network traffic 100 times
+mtr -w, --report-wide example.com                                    # Continually list all servers the network traffic goes through
+mtr -r, --report -w, --report-wide -c, --report-cycles 100 example.com # Output a report that lists network traffic 100 times
 
 nmap 0.0.0.0                # Scan for the 1000 most common open ports on localhost
 nmap 0.0.0.0 -p1-65535      # Scan for open ports on localhost between 1 and 65535
